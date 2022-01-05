@@ -8,11 +8,16 @@ export class UsersController {
 
   @Post()
   createUser(@Body() body: CreateUserDto): any {
-    return this.usersService.create(body);
+    return this.usersService.createUser(body);
   }
 
   @Get()
   getUser(@Body() body: CreateUserDto): any {
     return this.usersService.getByEmail(body.email);
+  }
+
+  @Get('/all')
+  getUsers(): any {
+    return this.usersService.getAllUsers();
   }
 }

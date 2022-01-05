@@ -12,7 +12,6 @@ export class UsersService {
   ) {}
 
   async getByEmail(email: string) {
-    console.log(email);
     const user = await this.usersRepository.findOne({ email });
     if (user) {
       return user;
@@ -23,7 +22,12 @@ export class UsersService {
     );
   }
 
-  async create(userData: CreateUserDto) {
+  getAllUsers() {
+    return this.usersRepository.find();
+  }
+
+  async createUser(userData: CreateUserDto) {
+    console.log('im here');
     const newUser = await this.usersRepository.create(userData);
     await this.usersRepository.save(newUser);
     return newUser;
