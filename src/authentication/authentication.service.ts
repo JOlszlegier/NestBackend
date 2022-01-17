@@ -1,9 +1,10 @@
 import { UsersService } from '../users/users.service';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import RegisterDto from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { PostgresErrorCode } from '../database/postgresErrorCodes.enum';
 
+@Injectable()
 export class AuthenticationService {
   constructor(private readonly usersService: UsersService) {}
 
@@ -14,9 +15,6 @@ export class AuthenticationService {
         ...registrationData,
         password: hashedPassword,
       };
-      console.log(newUser);
-      debugger;
-      console.log(this.usersService);
       const createdUser = await this.usersService.createUser(newUser);
       createdUser.password = undefined;
       return createdUser;
@@ -27,10 +25,7 @@ export class AuthenticationService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      throw new HttpException(
-        'Something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
