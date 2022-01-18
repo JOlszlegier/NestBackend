@@ -29,7 +29,7 @@ export class AuthenticationService {
     }
   }
 
-  private async verifyPassword(
+  private static async verifyPassword(
     plainTextPassword: string,
     hashedPassword: string,
   ) {
@@ -44,10 +44,14 @@ export class AuthenticationService {
       );
     }
   }
+
   public async getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
       const user = await this.usersService.getByEmail(email);
-      await this.verifyPassword(plainTextPassword, user.password);
+      await AuthenticationService.verifyPassword(
+        plainTextPassword,
+        user.password,
+      );
       user.password = undefined;
       return user;
     } catch (error) {
