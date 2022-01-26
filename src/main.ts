@@ -8,8 +8,16 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Splitwise')
     .setDescription('The splitwise API description')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'Token',
+      },
+      'access-token',
+    )
+
     .setVersion('1.0')
-    .addTag('splitwise')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
