@@ -22,4 +22,9 @@ export class UsersController {
   getUsers(): any {
     return this.usersService.getAllUsers();
   }
+
+  @Get('/email')
+  getUserByEmail(@Body() body: { email: string }): any {
+    return this.usersService.getByEmail(body.email);
+  }
 }
