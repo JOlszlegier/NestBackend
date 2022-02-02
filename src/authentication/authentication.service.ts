@@ -29,7 +29,7 @@ export class AuthenticationService {
       if (error?.code === PostgresErrorCode.UniqueViolation) {
         throw new HttpException(
           'User with that email already exists',
-          HttpStatus.BAD_REQUEST,
+          HttpStatus.NOT_ACCEPTABLE,
         );
       }
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,7 +47,7 @@ export class AuthenticationService {
     if (!isPasswordMatching) {
       throw new HttpException(
         'Wrong credentials provided',
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.UNAUTHORIZED,
       );
     }
   }
@@ -64,7 +64,7 @@ export class AuthenticationService {
     } catch (error) {
       throw new HttpException(
         'Wrong credentials provided',
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.UNAUTHORIZED,
       );
     }
   }
@@ -72,7 +72,7 @@ export class AuthenticationService {
   public getCookieWithJwtToken(userId: number) {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+    return `Authentication=${token}; Path=/; Max-Age=${this.configService.get(
       'JWT_EXPIRATION_TIME',
     )}`;
   }
