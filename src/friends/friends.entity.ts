@@ -7,12 +7,12 @@ class Friends {
   public id?: number;
 
   @ApiProperty({ type: String, description: 'user Id' })
-  @Column()
+  @Column({ unique: true })
   public userId: string;
 
   @ApiProperty({ type: [String], description: 'friends of user' })
   @Column('int', { array: true })
-  public friendsId: string[];
+  public friendsId: number[];
 }
 
 export default Friends;
