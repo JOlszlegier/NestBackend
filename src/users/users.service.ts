@@ -11,6 +11,7 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
+  //for test purposes only
   async getByEmail(email: string) {
     const user = await this.usersRepository.findOne({ email });
     if (user) {
@@ -20,6 +21,15 @@ export class UsersService {
       'User with this email does not exist',
       HttpStatus.NOT_FOUND,
     );
+  }
+
+  async getUserNamesById(idNumbers: number[]) {
+    const userNames: string[] = [];
+    for (const id of idNumbers) {
+      const userName = await this.usersRepository.findOne({ id });
+      userNames.push(userName.name);
+    }
+    return userNames;
   }
 
   getAllUsers() {

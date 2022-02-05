@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { FriendsService } from './friends.service';
 import {
   ApiBadRequestResponse,
@@ -23,7 +23,13 @@ export class FriendsController {
   @ApiNotFoundResponse({
     description: 'User with that email is not registered',
   })
-  addFriend(@Body() body: { userId: string; email: string }): any {
-    return this.friendsService.getUsersByEmails(body.email, body.userId);
+  addFriend(@Body() body: { userId: number; email: string }): any {
+    return this.friendsService.addFriendByEmail(body.email, body.userId);
+  }
+
+  @Get()
+  //api body ?
+  getFriends(@Query('userId') userId: number): any {
+    return this.friendsService.getFriendsList(userId);
   }
 }

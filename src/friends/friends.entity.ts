@@ -6,11 +6,11 @@ class Friends {
   @PrimaryGeneratedColumn()
   public id?: number;
 
-  @ApiProperty({ type: String, description: 'user Id' })
+  @ApiProperty({ type: Number, description: 'user Id' })
   @Column({ unique: true })
-  public userId: string;
+  public userId: number;
 
-  @ApiProperty({ type: [String], description: 'friends of user' })
+  @ApiProperty({ type: [Number], description: 'friends of user' })
   @Column('int', { array: true })
   public friendsId: number[];
 }

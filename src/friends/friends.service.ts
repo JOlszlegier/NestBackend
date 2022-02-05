@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import Friends from './friends.entity';
 import User from '../users/user.entity';
 import { Repository } from 'typeorm';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class FriendsService {
@@ -11,9 +12,22 @@ export class FriendsService {
     private friendsRepository: Repository<Friends>,
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private userService: UsersService,
   ) {}
 
-  async getUsersByEmails(email: string, userId: string) {
+  async getFriendsList(userId: number) {
+    const user = await this.friendsRepository.findOne({ userId });
+    if (user) {
+      return await this.userService.getUserNamesById(user.friendsId);
+    } else {
+      throw new HttpException(
+        'User does not have any friends',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async addFriendByEmail(email: string, userId: number) {
     const isUserInFriendDB = await this.friendsRepository.findOne({ userId });
     const friendId = await this.usersRepository.findOne({ email });
     //check if user with given email exist
@@ -32,7 +46,7 @@ export class FriendsService {
             isUserInFriendDB.id,
             isUserInFriendDB,
           );
-          return isUserInFriendDB;
+          return this.userService.getUserNamesById(isUserInFriendDB.friendsId);
         }
       } else {
         const friendIdArray = [friendId.id];
@@ -40,7 +54,7 @@ export class FriendsService {
           friendsId: friendIdArray,
           userId: userId,
         });
-        return isUserInFriendDB;
+        return this.userService.getUserNamesById([friendId.id]);
       }
     } else {
       throw new HttpException(
