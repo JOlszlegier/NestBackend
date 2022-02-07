@@ -31,7 +31,7 @@ export class FriendsService {
     const isUserInFriendDB = await this.friendsRepository.findOne({ userId });
     const friendId = await this.usersRepository.findOne({ email });
     //check if user with given email exist
-    if (friendId) {
+    if (friendId && friendId.id != userId) {
       //check if  user does have friends list already
       if (isUserInFriendDB) {
         //check if new friend isn't already on the friends list
