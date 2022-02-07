@@ -28,8 +28,15 @@ export class FriendsController {
   }
 
   @Get()
-  //api body ?
   getFriends(@Query('userId') userId: number): any {
     return this.friendsService.getFriendsList(userId);
+  }
+
+  @Get('check')
+  checkFriend(
+    @Query('userId') userId: number,
+    @Query('friendEmail') friendEmail: string,
+  ): any {
+    return this.friendsService.isFriendOnTheList(userId, friendEmail);
   }
 }

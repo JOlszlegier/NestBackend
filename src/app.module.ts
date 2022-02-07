@@ -9,6 +9,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { FriendsService } from './friends/friends.service';
 import { FriendsController } from './friends/friends.controller';
 import { FriendsModule } from './friends/friends.module';
+import { GroupsService } from './groups/groups.service';
+import { GroupsModule } from './groups/groups.module';
 import * as Joi from '@hapi/joi';
 
 @Module({
@@ -29,8 +31,9 @@ import * as Joi from '@hapi/joi';
     DatabaseModule,
     AuthenticationModule,
     FriendsModule,
+    GroupsModule,
   ],
   controllers: [AppController, FriendsController],
-  providers: [AppService, FriendsService],
+  providers: [AppService, FriendsService, GroupsService],
 })
 export class AppModule {}

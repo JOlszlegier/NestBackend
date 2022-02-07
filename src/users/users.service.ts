@@ -52,4 +52,15 @@ export class UsersService {
       HttpStatus.NOT_FOUND,
     );
   }
+
+  async getIdByEmail(email: string) {
+    const user = await this.usersRepository.findOne({ email });
+    if (user) {
+      return user.id;
+    }
+    throw new HttpException(
+      'User with this id does not exist',
+      HttpStatus.NOT_FOUND,
+    );
+  }
 }

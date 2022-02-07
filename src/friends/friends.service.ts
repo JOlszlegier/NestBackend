@@ -63,4 +63,17 @@ export class FriendsService {
       );
     }
   }
+
+  async isFriendOnTheList(userId: number, email: string) {
+    const friendList = await this.friendsRepository.findOne({ userId });
+    const friendId = await this.usersRepository.findOne({ email });
+    if (friendList.friendsId.includes(friendId.id)) {
+      return true;
+    } else {
+      throw new HttpException(
+        'This user is not on your friend list',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
 }
