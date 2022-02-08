@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { GroupsService } from './groups.service';
 
@@ -13,5 +13,10 @@ export class GroupsController {
   @Get()
   getGroup(): any {
     return this.groupsService.getGroup();
+  }
+
+  @Get('my-groups')
+  getMyGroups(@Query('userId') userId: number): any {
+    return this.groupsService.getMyGroups(userId);
   }
 }

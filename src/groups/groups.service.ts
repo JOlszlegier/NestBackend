@@ -34,4 +34,12 @@ export class GroupsService {
   async getGroup() {
     return this.groupsRepository.find();
   }
+
+  async getMyGroups(userId: number) {
+    //dlaczego userId staje się stringiem?
+    const search = await this.groupsRepository.find();
+    return search
+      .filter((item) => item.usersIds.includes(Number(userId)))
+      .map((item) => item.groupName);
+  }
 }
