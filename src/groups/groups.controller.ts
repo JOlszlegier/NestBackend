@@ -19,4 +19,9 @@ export class GroupsController {
   getMyGroups(@Query('userId') userId: number): any {
     return this.groupsService.getMyGroups(userId);
   }
+
+  @Get('getUsers')
+  getUsersInGroup(@Query('groupName') groupName: string): any {
+    return this.groupsService.getUsersInGroup(groupName);
+  }
 }
