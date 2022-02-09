@@ -21,7 +21,23 @@ export class GroupsController {
   }
 
   @Get('getUsers')
-  getUsersInGroup(@Query('groupName') groupName: string): any {
-    return this.groupsService.getUsersInGroup(groupName);
+  getUsersInGroup(
+    @Query('groupName') groupName: string,
+    @Query('userId') userId: number,
+  ): any {
+    return this.groupsService.getUsersInGroup(groupName, userId);
+  }
+
+  @Get('check-for-expense')
+  checkFriendForExpense(
+    @Query('userId') userId: number,
+    @Query('friendEmail') friendEmail: string,
+    @Query('groupName') groupName: string,
+  ): any {
+    return this.groupsService.canFriendBeAddedToExpense(
+      userId,
+      friendEmail,
+      groupName,
+    );
   }
 }
