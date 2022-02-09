@@ -34,7 +34,6 @@ export class GroupsService {
   async getGroup() {
     return this.groupsRepository.find();
   }
-
   //? question
   async getMyGroups(userId: number) {
     //dlaczego userId staje się stringiem?

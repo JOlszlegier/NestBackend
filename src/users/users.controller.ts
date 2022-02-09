@@ -24,6 +24,7 @@ export class UsersController {
   }
 
   @Get('/email')
+  @ApiOkResponse({ description: 'User data with given email' })
   getUserByEmail(@Body() body: { email: string }): any {
     return this.usersService.getByEmail(body.email);
   }

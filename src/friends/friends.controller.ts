@@ -28,11 +28,15 @@ export class FriendsController {
   }
 
   @Get()
+  @ApiOkResponse({ description: 'list of your friends' })
+  @ApiNotFoundResponse({ description: ' user does not have any friends' })
   getFriends(@Query('userId') userId: number): any {
     return this.friendsService.getFriendsList(userId);
   }
 
   @Get('check')
+  @ApiOkResponse({ description: 'This friend is on the list!' })
+  @ApiNotFoundResponse({ description: 'This user is not on the list!' })
   checkFriend(
     @Query('userId') userId: number,
     @Query('friendEmail') friendEmail: string,
