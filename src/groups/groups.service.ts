@@ -34,7 +34,7 @@ export class GroupsService {
   async getGroup() {
     return this.groupsRepository.find();
   }
-  //? question
+
   async getMyGroups(userId: string) {
     const search = await this.groupsRepository.find();
     return search
@@ -62,7 +62,7 @@ export class GroupsService {
     const newUser = await this.usersRepository.findOne({ email });
     const user = await this.friendsRepository.findOne({ userId });
     const group = await this.groupsRepository.findOne({ groupName });
-    if (newUser && user.friendsId.includes(newUser.id)) {
+    if (newUser) {
       if (
         groupName != 'Dashboard' &&
         groupName != 'Recent Activities' &&
@@ -76,7 +76,7 @@ export class GroupsService {
             HttpStatus.NOT_FOUND,
           );
         }
-      } else {
+      } else if (user.friendsId.includes(newUser.id)) {
         return true;
       }
     } else {
