@@ -11,6 +11,9 @@ import { FriendsController } from './friends/friends.controller';
 import { FriendsModule } from './friends/friends.module';
 import { GroupsService } from './groups/groups.service';
 import { GroupsModule } from './groups/groups.module';
+import { ExpensesController } from './expenses/expenses.controller';
+import { ExpensesService } from './expenses/expenses.service';
+import { ExpensesModule } from './expenses/expenses.module';
 import * as Joi from '@hapi/joi';
 
 @Module({
@@ -32,8 +35,9 @@ import * as Joi from '@hapi/joi';
     AuthenticationModule,
     FriendsModule,
     GroupsModule,
+    ExpensesModule,
   ],
-  controllers: [AppController, FriendsController],
-  providers: [AppService, FriendsService, GroupsService],
+  controllers: [AppController, FriendsController, ExpensesController],
+  providers: [AppService, FriendsService, GroupsService, ExpensesService],
 })
 export class AppModule {}

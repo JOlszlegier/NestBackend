@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOkResponse } from '@nestjs/swagger';
@@ -27,5 +27,11 @@ export class UsersController {
   @ApiOkResponse({ description: 'User data with given email' })
   getUserByEmail(@Body() body: { email: string }): any {
     return this.usersService.getByEmail(body.email);
+  }
+
+  @Get('/balance-check')
+  @ApiOkResponse({ description: 'User data' })
+  getBalance(@Query('userId') userId: number): any {
+    return this.usersService.balanceCheck(userId);
   }
 }
