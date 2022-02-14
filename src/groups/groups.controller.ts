@@ -19,7 +19,7 @@ export class GroupsController {
 
   @Get('my-groups')
   @ApiOkResponse({ description: 'List of your groups' })
-  getMyGroups(@Query('userId') userId: number): any {
+  getMyGroups(@Query('userId') userId: string): any {
     return this.groupsService.getMyGroups(userId);
   }
 

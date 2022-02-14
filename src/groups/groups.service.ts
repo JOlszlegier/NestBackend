@@ -35,8 +35,7 @@ export class GroupsService {
     return this.groupsRepository.find();
   }
   //? question
-  async getMyGroups(userId: number) {
-    //dlaczego userId staje się stringiem?
+  async getMyGroups(userId: string) {
     const search = await this.groupsRepository.find();
     return search
       .filter((item) => item.usersIds.includes(Number(userId)))

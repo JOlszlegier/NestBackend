@@ -7,6 +7,10 @@ export class CreateUserDto {
   name: string;
   @ApiProperty({ type: String, description: 'password' })
   password: string;
+  @ApiProperty({ type: Number, description: 'income' })
+  income: number;
+  @ApiProperty({ type: Number, description: 'outcome' })
+  outcome: number;
 }
 
 export default CreateUserDto;

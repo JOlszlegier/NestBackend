@@ -16,6 +16,14 @@ class User {
   @ApiProperty({ type: String, description: 'password' })
   @Column()
   public password: string;
+
+  @ApiProperty({ type: Number, description: 'income' })
+  @Column()
+  public income: number;
+
+  @ApiProperty({ type: Number, description: 'outcome' })
+  @Column()
+  public outcome: number;
 }
 
 export default User;
