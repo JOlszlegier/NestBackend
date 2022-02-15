@@ -6,7 +6,7 @@ export class createExpenseDto {
     type: Number,
     description: 'Id of user money will be sent to',
   })
-  public to: number;
+  public to: string;
 
   @ApiProperty({
     type: String,
@@ -22,7 +22,7 @@ export class createExpenseDto {
 
   public eachUserValue: [
     {
-      from: number;
+      from: string;
       value: number;
     },
   ];
