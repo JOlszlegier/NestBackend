@@ -28,13 +28,18 @@ class Expenses {
   public groupName: string;
 
   @ApiProperty({
-    type: Date,
-    description: 'Creation date',
+    type: Number,
+    description: 'Id of user who needs to pay',
   })
   @Column()
-  public expenseDate: Date;
+  public from: number;
 
-  // ? jak dodac obiekt
+  @ApiProperty({
+    type: Number,
+    description: 'Value of expense',
+  })
+  @Column()
+  public value: number;
 }
 
 export default Expenses;

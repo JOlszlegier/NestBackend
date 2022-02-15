@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { eachUserExpenseDto } from './eachUserExpense.dto';
 
 export class createExpenseDto {
   @ApiProperty({
@@ -19,11 +20,10 @@ export class createExpenseDto {
   })
   public groupName: string;
 
-  @ApiProperty({
-    type: Date,
-    description: 'Creation date',
-  })
-  public expenseDate: Date;
-
-  //??? jak dodac obiekt
+  public eachUserValue: [
+    {
+      from: number;
+      value: number;
+    },
+  ];
 }
