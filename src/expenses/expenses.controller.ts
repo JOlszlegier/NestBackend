@@ -12,12 +12,18 @@ export class ExpensesController {
   }
 
   @Get('plus')
-  getExpensesPlus(@Query('userId') userId: number): any {
-    return this.expensesService.getExpensesPlus(userId);
+  getExpensesPlus(
+    @Query('userId') userId: number,
+    @Query('groupName') groupName: string,
+  ): any {
+    return this.expensesService.getExpensesPlus(userId, groupName);
   }
 
   @Get('minus')
-  getExpensesMinus(@Query('userId') userId: number): any {
-    return this.expensesService.getExpensesMinus(userId);
+  getExpensesMinus(
+    @Query('userId') userId: number,
+    @Query('groupName') groupName: string,
+  ): any {
+    return this.expensesService.getExpensesMinus(userId, groupName);
   }
 }

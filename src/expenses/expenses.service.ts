@@ -35,27 +35,47 @@ export class ExpensesService {
     }
   }
 
-  async getExpensesPlus(userId: number) {
+  async getExpensesPlus(userId: number, groupName: string) {
     const expensesArray: expenseInfoDto[] = [];
-    const expenses = await this.expensesRepository.find({ to: userId });
-    for (const expense of expenses) {
-      expensesArray.push({
-        description: expense.description,
-        amount: expense.value,
+
+    if (groupName != 'Dashboard' && groupName != 'Recent Activities') {
+      const expenses = await this.expensesRepository.find({
+        to: userId,
+        groupName: groupName,
       });
+      this.extractInfoFromExpenses(expenses, expensesArray);
+    } else {
+      const expenses = await this.expensesRepository.find({ to: userId });
+      this.extractInfoFromExpenses(expenses, expensesArray);
     }
     return { expensesArray };
   }
 
-  async getExpensesMinus(userId: number) {
+  async getExpensesMinus(userId: number, groupName: string) {
     const expensesArray: expenseInfoDto[] = [];
-    const expenses = await this.expensesRepository.find({ from: userId });
+    if (groupName != 'Dashboard' && groupName != 'Recent Activities') {
+      const expenses = await this.expensesRepository.find({
+        from: userId,
+        groupName: groupName,
+      });
+      this.extractInfoFromExpenses(expenses, expensesArray);
+    } else {
+      const expenses = await this.expensesRepository.find({ from: userId });
+      this.extractInfoFromExpenses(expenses, expensesArray);
+    }
+
+    return { expensesArray };
+  }
+
+  extractInfoFromExpenses(
+    expenses: Expenses[],
+    expensesArray: expenseInfoDto[],
+  ) {
     for (const expense of expenses) {
       expensesArray.push({
         description: expense.description,
         amount: expense.value,
       });
     }
-    return { expensesArray };
   }
 }
