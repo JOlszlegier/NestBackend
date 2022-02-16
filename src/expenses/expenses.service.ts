@@ -21,7 +21,6 @@ export class ExpensesService {
       const userFrom = await this.usersRepository.findOne({
         email: data.eachUserValue[user].from,
       });
-      console.log(user);
       await this.expensesRepository.save({
         to: userTo.id,
         description: data.description,
@@ -42,10 +41,10 @@ export class ExpensesService {
     for (const expense of expenses) {
       expensesArray.push({
         description: expense.description,
-        value: expense.value,
+        amount: expense.value,
       });
     }
-    return expensesArray;
+    return { expensesArray };
   }
 
   async getExpensesMinus(userId: number) {
@@ -54,9 +53,9 @@ export class ExpensesService {
     for (const expense of expenses) {
       expensesArray.push({
         description: expense.description,
-        value: expense.value,
+        amount: expense.value,
       });
     }
-    return expensesArray;
+    return { expensesArray };
   }
 }
