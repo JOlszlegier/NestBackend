@@ -34,4 +34,9 @@ export class ExpensesController {
   ): any {
     return this.expensesService.getExpensesInfo(userId, groupName);
   }
+
+  @Post('settleUp')
+  settleUp(@Body() body: { userId: number; expensesIds: number[] }): any {
+    return this.expensesService.settleUp(body.userId, body.expensesIds);
+  }
 }

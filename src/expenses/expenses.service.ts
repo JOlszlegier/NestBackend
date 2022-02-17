@@ -84,7 +84,7 @@ export class ExpensesService {
     const expensesId: number[] = [];
     const holder = {};
     for (const expense of expenses) {
-      const userData = await this.usersRepository.findOne({ id: expense.from });
+      const userData = await this.usersRepository.findOne({ id: expense.to });
       expensesArray.push({
         name: userData.name,
         amount: expense.value,
@@ -105,6 +105,23 @@ export class ExpensesService {
     }
 
     return { expensesInfoResponse, expensesId };
+  }
+
+  async settleUp(userId: number, expensesIds: number[]) {
+    const fromUser = await this.usersRepository.findOne(userId);
+    for (const expenseId of expensesIds) {
+      const expense = await this.expensesRepository.findOne(expenseId);
+      const toUser = await this.usersRepository.findOne(expense.to);
+      await this.updateExpense(expense, fromUser, toUser);
+    }
+  }
+
+  async updateExpense(expense: Expenses, fromUser: User, toUser: User) {
+    fromUser.outcome -= expense.value;
+    toUser.income -= expense.value;
+    await this.usersRepository.update(fromUser.id, fromUser);
+    await this.usersRepository.update(toUser.id, toUser);
+    await this.expensesRepository.delete(expense.id);
   }
 
   extractInfoFromExpenses(
