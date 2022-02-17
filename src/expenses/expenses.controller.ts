@@ -26,4 +26,12 @@ export class ExpensesController {
   ): any {
     return this.expensesService.getExpensesMinus(userId, groupName);
   }
+
+  @Get('settleUpInfo')
+  getSettleUpInfo(
+    @Query('userId') userId: number,
+    @Query('groupName') groupName: string,
+  ): any {
+    return this.expensesService.getExpensesInfo(userId, groupName);
+  }
 }

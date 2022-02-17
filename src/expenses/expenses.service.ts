@@ -4,7 +4,8 @@ import { Repository } from 'typeorm';
 import Expenses from './expenses.entity';
 import User from '../users/user.entity';
 import { createExpenseDto } from './dto/createExpense.dto';
-import { expenseInfoDto } from './dto/expenseInfo.dto';
+import { expenseListInfoDto } from './dto/expenseInfo.dto';
+import { settleUpInfoDto } from './dto/settleUpInfo.dto';
 
 @Injectable()
 export class ExpensesService {
@@ -36,7 +37,7 @@ export class ExpensesService {
   }
 
   async getExpensesPlus(userId: number, groupName: string) {
-    const expensesArray: expenseInfoDto[] = [];
+    const expensesArray: expenseListInfoDto[] = [];
 
     if (groupName != 'Dashboard' && groupName != 'Recent Activities') {
       const expenses = await this.expensesRepository.find({
@@ -52,7 +53,7 @@ export class ExpensesService {
   }
 
   async getExpensesMinus(userId: number, groupName: string) {
-    const expensesArray: expenseInfoDto[] = [];
+    const expensesArray: expenseListInfoDto[] = [];
     if (groupName != 'Dashboard' && groupName != 'Recent Activities') {
       const expenses = await this.expensesRepository.find({
         from: userId,
@@ -67,9 +68,48 @@ export class ExpensesService {
     return { expensesArray };
   }
 
+  async getExpensesInfo(userId: number, groupName: string) {
+    let expenses: Expenses[] = [];
+    if (groupName != 'Dashboard' && groupName != 'Recent Activities') {
+      expenses = await this.expensesRepository.find({
+        from: userId,
+        groupName: groupName,
+      });
+    } else {
+      expenses = await this.expensesRepository.find({ from: userId });
+    }
+
+    const expensesArray: settleUpInfoDto[] = [];
+    const expensesInfoResponse: settleUpInfoDto[] = [];
+    const expensesId: number[] = [];
+    const holder = {};
+    for (const expense of expenses) {
+      const userData = await this.usersRepository.findOne({ id: expense.from });
+      expensesArray.push({
+        name: userData.name,
+        amount: expense.value,
+      });
+      expensesId.push(expense.id);
+    }
+
+    expensesArray.forEach((d) => {
+      if (holder.hasOwnProperty(d.name)) {
+        holder[d.name] = holder[d.name] + d.amount;
+      } else {
+        holder[d.name] = d.amount;
+      }
+    });
+
+    for (const prop in holder) {
+      expensesInfoResponse.push({ name: prop, amount: holder[prop] });
+    }
+
+    return { expensesInfoResponse, expensesId };
+  }
+
   extractInfoFromExpenses(
     expenses: Expenses[],
-    expensesArray: expenseInfoDto[],
+    expensesArray: expenseListInfoDto[],
   ) {
     for (const expense of expenses) {
       expensesArray.push({
