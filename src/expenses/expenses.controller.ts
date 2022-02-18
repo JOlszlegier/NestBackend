@@ -39,4 +39,12 @@ export class ExpensesController {
   settleUp(@Body() body: { userId: number; expensesIds: number[] }): any {
     return this.expensesService.settleUp(body.userId, body.expensesIds);
   }
+
+  @Get('balanceInfo')
+  balanceCheck(
+    @Query('userId') userId: number,
+    @Query('groupName') groupName: string,
+  ): any {
+    return this.expensesService.balanceCheckInGroup(userId, groupName);
+  }
 }

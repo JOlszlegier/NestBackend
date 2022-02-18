@@ -69,7 +69,7 @@ export class ExpensesService {
   }
 
   async getExpensesInfo(userId: number, groupName: string) {
-    let expenses: Expenses[] = [];
+    let expenses: Expenses[];
     if (groupName != 'Dashboard' && groupName != 'Recent Activities') {
       expenses = await this.expensesRepository.find({
         from: userId,
@@ -122,6 +122,39 @@ export class ExpensesService {
     await this.usersRepository.update(fromUser.id, fromUser);
     await this.usersRepository.update(toUser.id, toUser);
     await this.expensesRepository.delete(expense.id);
+  }
+
+  async balanceCheckInGroup(userId: number, groupName: string) {
+    let expensesIncoming: Expenses[];
+    let expensesOutcoming: Expenses[];
+    let income = 0;
+    let outcome = 0;
+    if (groupName != 'Dashboard' && groupName != 'Recent Activities') {
+      expensesIncoming = await this.expensesRepository.find({
+        to: userId,
+        groupName: groupName,
+      });
+      expensesOutcoming = await this.expensesRepository.find({
+        from: userId,
+        groupName: groupName,
+      });
+    } else {
+      expensesIncoming = await this.expensesRepository.find({
+        to: userId,
+      });
+      expensesOutcoming = await this.expensesRepository.find({
+        from: userId,
+      });
+    }
+    for (const expense of expensesIncoming) {
+      expense.value;
+      income += expense.value;
+    }
+    for (const expense of expensesOutcoming) {
+      expense.value;
+      outcome += expense.value;
+    }
+    return { income, outcome };
   }
 
   extractInfoFromExpenses(
