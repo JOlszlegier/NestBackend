@@ -66,8 +66,4 @@ export class UsersService {
     );
   }
 
-  //jak zwracac tylko niektore elementy np. user.income ?
-  async balanceCheck(userId: number) {
-    return await this.usersRepository.findOne({ id: userId });
-  }
 }

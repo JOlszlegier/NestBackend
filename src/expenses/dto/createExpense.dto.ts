@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { eachUserExpenseDto } from './eachUserExpense.dto';
 
-export class createExpenseDto {
+export class CreateExpenseDto {
   @ApiProperty({
     type: Number,
     description: 'Id of user money will be sent to',
@@ -20,6 +19,10 @@ export class createExpenseDto {
   })
   public groupName: string;
 
+  @ApiProperty({
+    description: 'Array of users debt',
+    type: Object,
+  })
   public eachUserValue: [
     {
       from: string;

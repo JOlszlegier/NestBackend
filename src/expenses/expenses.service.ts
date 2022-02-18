@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import Expenses from './expenses.entity';
 import User from '../users/user.entity';
-import { createExpenseDto } from './dto/createExpense.dto';
+import { CreateExpenseDto } from './dto/createExpense.dto';
 import { expenseListInfoDto } from './dto/expenseInfo.dto';
 import { settleUpInfoDto } from './dto/settleUpInfo.dto';
 
@@ -16,7 +16,7 @@ export class ExpensesService {
     private expensesRepository: Repository<Expenses>,
   ) {}
 
-  async addExpense(data: createExpenseDto) {
+  async addExpense(data: CreateExpenseDto) {
     const userTo = await this.usersRepository.findOne({ email: data.to });
     for (const user in data.eachUserValue) {
       const userFrom = await this.usersRepository.findOne({

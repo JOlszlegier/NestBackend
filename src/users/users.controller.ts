@@ -29,9 +29,4 @@ export class UsersController {
     return this.usersService.getByEmail(body.email);
   }
 
-  @Get('/balance-check')
-  @ApiOkResponse({ description: 'User data' })
-  getBalance(@Query('userId') userId: number): any {
-    return this.usersService.balanceCheck(userId);
-  }
 }
