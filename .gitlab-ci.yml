@@ -1,14 +1,20 @@
-image: node:12.13.0-alpine
-stages:
+demo_job_1:
+  tags:
+    - ci
+  script:
+    - echo Hello World
+
+#image: node:12.13.0-alpine
+#stages:
 #  - ".pre"
-  - build
+#  - build
 #  - test
 #  - deploy
 #  - ".post"
-build-job:
-  stage: build
-  script:
-    - echo Hello World
+#build-job:
+#  stage: build
+#  script:
+#    - echo Hello World
 #unit-test-job:
 #  stage: test
 #  script:
