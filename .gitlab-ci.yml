@@ -1,20 +1,20 @@
 image: node:12.13.0-alpine
 stages:
-  - ".pre"
+#  - ".pre"
   - build
-  - test
-  - deploy
-  - ".post"
+#  - test
+#  - deploy
+#  - ".post"
 build-job:
   stage: build
   script:
-    - npm run build
-unit-test-job:
-  stage: test
-  script:
-    - npm run test:e2e
-deploy-job:
-  stage: deploy
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    - echo Hello World
+#unit-test-job:
+#  stage: test
+#  script:
+#    - npm run test:e2e
+#deploy-job:
+#  stage: deploy
+#  script:
+#    - echo "Deploying application..."
+#    - echo "Application successfully deployed."
