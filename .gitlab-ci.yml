@@ -1,6 +1,7 @@
 demo_job_1:
   tags:
     - ci
+    - docker
   script:
     - echo Hello World
 
