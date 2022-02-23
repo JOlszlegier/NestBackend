@@ -4,23 +4,3 @@ demo_job_1:
   script:
     - echo Hello World
 
-#image: node:12.13.0-alpine
-#stages:
-#  - ".pre"
-#  - build
-#  - test
-#  - deploy
-#  - ".post"
-#build-job:
-#  stage: build
-#  script:
-#    - echo Hello World
-#unit-test-job:
-#  stage: test
-#  script:
-#    - npm run test:e2e
-#deploy-job:
-#  stage: deploy
-#  script:
-#    - echo "Deploying application..."
-#    - echo "Application successfully deployed."
